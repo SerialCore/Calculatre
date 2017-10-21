@@ -7,17 +7,21 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid Background="White">
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-        <CommandBar Background="#FFFA3F53" Foreground="White" VerticalAlignment="Top">
+        <Grid x:Name="backboard"/>
+
+        <CommandBar Background="#FF2D2D30" Foreground="White" VerticalAlignment="Top">
             <CommandBar.Content>
                 <TextBlock x:Name="state" Text="Deg" Foreground="White" FontSize="20" Margin="10,10,10,10"/>
             </CommandBar.Content>
-            <AppBarToggleButton Label="Mode" Checked="_radian" Unchecked="_scale" Icon="DockLeft" Foreground="White"/>
+            <AppBarToggleButton Label="Mode" Checked="_radian" Unchecked="_scale" Foreground="White">
+                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xEB05;" />
+            </AppBarToggleButton>
             <AppBarSeparator Foreground="White"/>
             <AppBarButton Click="open_record" Icon="List" Label="Record" Foreground="White"/>
             <AppBarSeparator Foreground="White"/>
-            <AppBarButton Click="save" Icon="Save" Label="Save" Foreground="White"/>
+            <AppBarButton Click="save" Icon="Share" Label="Export" Foreground="White"/>
             <AppBarSeparator Foreground="White"/>
         </CommandBar>
 
@@ -49,12 +53,12 @@
                     <RowDefinition Height="6*"/>
                 </Grid.RowDefinitions>
                 <ScrollViewer Grid.Row="0" ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollBarVisibility="Disabled"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                    <TextBlock x:Name="result" FontSize="25" TextWrapping="Wrap"/>
+                    <TextBlock x:Name="result" FontSize="35" TextWrapping="Wrap"/>
                 </ScrollViewer>
                 <ScrollViewer Grid.Row="1" ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollBarVisibility="Disabled"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                    <TextBlock x:Name="_result" FontSize="20" TextWrapping="Wrap"/>
+                    <TextBlock x:Name="_result" FontSize="35" TextWrapping="Wrap"/>
                 </ScrollViewer>
-                <Grid Grid.Row="2" Background="#FF6A6A8A" BorderBrush="SkyBlue" BorderThickness="0.5">
+                <Grid Grid.Row="2" Background="#886A6A8A" BorderBrush="SkyBlue" BorderThickness="0.5">
                     <Grid.RowDefinitions>
                         <RowDefinition/>
                         <RowDefinition/>

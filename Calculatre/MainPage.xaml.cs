@@ -3,8 +3,10 @@ using System.Collections.ObjectModel;
 using System.Text;
 using Windows.Storage;
 using Windows.Storage.Pickers;
+using Windows.UI.Composition;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Hosting;
 
 //“空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409 上有介绍
 
@@ -20,9 +22,23 @@ namespace Calculatre
         public MainPage()
         {
             this.InitializeComponent();
+            InitializeFrostedGlass(backboard);
             // ListView必需的代码
             Items = new ObservableCollection<Item>();
             this.DataContext = this;
+        }
+
+        private void InitializeFrostedGlass(UIElement glassHost)
+        {
+            Visual hostVisual = ElementCompositionPreview.GetElementVisual(glassHost);
+            Compositor compositor = hostVisual.Compositor;
+            var backdropBrush = compositor.CreateHostBackdropBrush();
+            var glassVisual = compositor.CreateSpriteVisual();
+            glassVisual.Brush = backdropBrush;
+            ElementCompositionPreview.SetElementChildVisual(glassHost, glassVisual);
+            var bindSizeAnimation = compositor.CreateExpressionAnimation("hostVisual.Size");
+            bindSizeAnimation.SetReferenceParameter("hostVisual", hostVisual);
+            glassVisual.StartAnimation("Size", bindSizeAnimation);
         }
 
         Calculate mycalculator = new Calculate();
@@ -428,8 +444,6 @@ namespace Calculatre
             result.Text = my_formula.ToString();
             last[count++] = ".";
         }
-
-
 
         #endregion
 

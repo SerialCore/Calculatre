@@ -6,6 +6,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using Windows.Foundation.Metadata;
 using System.Threading.Tasks;
+using Windows.UI;
 
 namespace Calculatre
 {
@@ -29,17 +30,9 @@ namespace Calculatre
         /// 将在启动应用程序以打开特定文件等情况下使用。
         /// </summary>
         /// <param name="e">有关启动请求和过程的详细信息。</param>
-        protected override async void OnLaunched(LaunchActivatedEventArgs e)
+        protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
-            // 隐藏任务栏
-            if (ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
-            {
-                await Windows.UI.ViewManagement.StatusBar.GetForCurrentView().HideAsync();
-            }
-            // 强制横屏
-            Windows.Graphics.Display.DisplayInformation.AutoRotationPreferences = Windows.Graphics.Display.DisplayOrientations.Landscape;
-
-            await Task.Delay(TimeSpan.FromSeconds(2));
+            launchEffect();
 
             Frame rootFrame = Window.Current.Content as Frame;
 
@@ -73,6 +66,41 @@ namespace Calculatre
                 // 确保当前窗口处于活动状态
                 Window.Current.Activate();
             }
+        }
+
+        private async void launchEffect()
+        {
+            // 隐藏任务栏
+            if (ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
+            {
+                await Windows.UI.ViewManagement.StatusBar.GetForCurrentView().HideAsync();
+            }
+
+            // 强制横屏
+            Windows.Graphics.Display.DisplayInformation.AutoRotationPreferences = Windows.Graphics.Display.DisplayOrientations.Landscape;
+
+            var view = Windows.UI.ViewManagement.ApplicationView.GetForCurrentView();
+
+            // active
+            view.TitleBar.BackgroundColor = Color.FromArgb(255, 45, 45, 48);
+            view.TitleBar.ForegroundColor = Colors.White;
+
+            // inactive
+            view.TitleBar.InactiveBackgroundColor = Color.FromArgb(255, 45, 45, 48);
+            view.TitleBar.InactiveForegroundColor = Colors.White;
+
+            // button
+            view.TitleBar.ButtonBackgroundColor = Color.FromArgb(255, 45, 45, 48);
+            view.TitleBar.ButtonForegroundColor = Colors.White;
+
+            view.TitleBar.ButtonHoverBackgroundColor = Color.FromArgb(255, 75, 75, 78);
+            view.TitleBar.ButtonHoverForegroundColor = Colors.White;
+
+            view.TitleBar.ButtonPressedBackgroundColor = Color.FromArgb(255, 75, 75, 78);
+            view.TitleBar.ButtonPressedForegroundColor = Colors.White;
+
+            view.TitleBar.ButtonInactiveBackgroundColor = Color.FromArgb(255, 45, 45, 48);
+            view.TitleBar.ButtonInactiveForegroundColor = Colors.White;
         }
 
         /// <summary>
