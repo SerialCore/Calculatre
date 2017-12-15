@@ -52,10 +52,10 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="6*"/>
                 </Grid.RowDefinitions>
-                <ScrollViewer Grid.Row="0" ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollBarVisibility="Disabled"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                <ScrollViewer Grid.Row="0" Background="#88FFFFFF" ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollBarVisibility="Disabled"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
                     <TextBlock x:Name="result" FontSize="35" TextWrapping="Wrap"/>
                 </ScrollViewer>
-                <ScrollViewer Grid.Row="1" ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollBarVisibility="Disabled"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                <ScrollViewer Grid.Row="1" Background="#88FFFFFF" ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollBarVisibility="Disabled"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
                     <TextBlock x:Name="_result" FontSize="35" TextWrapping="Wrap"/>
                 </ScrollViewer>
                 <Grid Grid.Row="2" Background="#886A6A8A" BorderBrush="SkyBlue" BorderThickness="0.5">
@@ -119,8 +119,10 @@
             <SplitView x:Name="cal_record" OpenPaneLength="250" CompactPaneLength="0" PaneBackground="White" DisplayMode="CompactOverlay">
                 <SplitView.Pane>
                     <ScrollViewer Grid.Row="0" ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollBarVisibility="Auto" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                        <Grid >
-                            <ListView x:Name="record_list" ItemsSource="{Binding Items}" IsItemClickEnabled="True" ItemClick="record_list_ItemClick" SelectionMode="Single">
+                        <Grid>
+                            <Grid x:Name="splitboard"/>
+
+                            <ListView x:Name="record_list" Background="#88FFFFFF" ItemsSource="{Binding Items}" IsItemClickEnabled="True" ItemClick="record_list_ItemClick" SelectionMode="Single">
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
                                         <TextBlock Text="{Binding Record}" FontSize="18"/>

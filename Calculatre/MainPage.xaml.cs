@@ -23,6 +23,7 @@ namespace Calculatre
         {
             this.InitializeComponent();
             InitializeFrostedGlass(backboard);
+            InitializeFrostedGlass(splitboard);
             // ListView必需的代码
             Items = new ObservableCollection<Item>();
             this.DataContext = this;
