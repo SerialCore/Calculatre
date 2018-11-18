@@ -7,6 +7,7 @@ using Windows.UI.Composition;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Hosting;
+using Windows.UI.Xaml.Navigation;
 
 //“空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409 上有介绍
 
@@ -17,8 +18,6 @@ namespace Calculatre
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        public ObservableCollection<Item> Items { get; set; }
-
         public MainPage()
         {
             this.InitializeComponent();
@@ -27,6 +26,27 @@ namespace Calculatre
             // ListView必需的代码
             Items = new ObservableCollection<Item>();
             this.DataContext = this;
+        }
+
+        public ObservableCollection<Item> Items { get; set; }
+
+        Calculate mycalculator = new Calculate();
+        StringBuilder my_formula = new StringBuilder("");
+        // 用于删除字符时的间接量
+        string temp;
+        // 用于记录输入
+        string[] last = new string[50];
+        int count = 0;
+
+        protected async override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            try
+            {
+                StorageFile file = await ApplicationData.Current.LocalFolder.GetFileAsync("Cal-Record.txt");
+                string content = await FileIO.ReadTextAsync(file);
+                Items = JsonHelper.DeserializeJsonToObject<ObservableCollection<Item>>(content);
+            }
+            catch { }
         }
 
         private void InitializeFrostedGlass(UIElement glassHost)
@@ -41,14 +61,6 @@ namespace Calculatre
             bindSizeAnimation.SetReferenceParameter("hostVisual", hostVisual);
             glassVisual.StartAnimation("Size", bindSizeAnimation);
         }
-
-        Calculate mycalculator = new Calculate();
-        StringBuilder my_formula = new StringBuilder("");
-        // 用于删除字符时的间接量
-        string temp;
-        // 用于记录输入
-        String[] last = new string[50];
-        int count = 0;
 
         #region 计算器操作
 
@@ -396,12 +408,13 @@ namespace Calculatre
                 {
                     // 为了方便用户的使用，必需给出容错的功能，但是考虑到算法，下面的容错提示不会显示，但也不至于使应用崩溃。
                     // 保留容错提示是为了保持代码的可移植性。
-                    case 1: result.Text = "除数不为零"; break;
-                    case 3: result.Text = "不能识别输入符号"; break;
-                    case 4: result.Text = "你让我算啥？"; break;
+                    case 1: result.Text = "divisor = 0"; break;
+                    case 3: result.Text = "unexpected characters"; break;
+                    case 4: result.Text = "？"; break;
                     default:
                         _result.Text = result.Text + " = " + mycalculator._result.ToString("G");
                         Items.Add(new Item { Record = result.Text + " = " + mycalculator._result.ToString("G"), Result = mycalculator._result.ToString("G") });
+                        SaveLocal();
                         break;
                 }
                 result.Text = "";
@@ -448,7 +461,14 @@ namespace Calculatre
 
         #endregion
 
-        private async void save(object sender, RoutedEventArgs e)
+        private async void SaveLocal()
+        {
+            StorageFile file = await ApplicationData.Current.LocalFolder.CreateFileAsync("Cal-Record.txt", CreationCollisionOption.ReplaceExisting);
+            string content = JsonHelper.SerializeObject(Items);
+            await FileIO.WriteTextAsync(file, content);
+        }
+
+        private async void Export(object sender, RoutedEventArgs e)
         {
             string data = "";
             for (int i = 0; i < Items.Count; i++)
@@ -457,16 +477,10 @@ namespace Calculatre
             }
 
             FileSavePicker picker = new FileSavePicker();
-            // 指定文件类型
-            picker.FileTypeChoices.Add("实验记录.doc", new String[] { ".doc" });
-            picker.FileTypeChoices.Add("实验记录.txt", new String[] { ".txt" });
-            // 默认定位到桌面
+            picker.FileTypeChoices.Add("Cal-Record", new String[] { ".txt" });
             picker.SuggestedStartLocation = PickerLocationId.Desktop;
-            // 默认文件名
-            picker.SuggestedFileName = "计算结果" + DateTime.Now.ToString("yyyyMMddHHmmss");
-            // 显示选择器
+            picker.SuggestedFileName = "Cal-Record" + DateTime.Now.ToString("yyyyMMddHHmmss");
             StorageFile file = await picker.PickSaveFileAsync();
-            // 保存文本
             if (file != null)
             {
                 await FileIO.WriteTextAsync(file, data, Windows.Storage.Streams.UnicodeEncoding.Utf8);

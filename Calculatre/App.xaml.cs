@@ -1,12 +1,11 @@
 ﻿using System;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
+using Windows.Foundation.Metadata;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using Windows.Foundation.Metadata;
-using System.Threading.Tasks;
-using Windows.UI;
 
 namespace Calculatre
 {
@@ -68,14 +67,8 @@ namespace Calculatre
             }
         }
 
-        private async void launchEffect()
+        private void launchEffect()
         {
-            // 隐藏任务栏
-            if (ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
-            {
-                await Windows.UI.ViewManagement.StatusBar.GetForCurrentView().HideAsync();
-            }
-
             // 强制横屏
             Windows.Graphics.Display.DisplayInformation.AutoRotationPreferences = Windows.Graphics.Display.DisplayOrientations.Landscape;
 

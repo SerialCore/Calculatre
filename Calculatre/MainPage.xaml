@@ -21,7 +21,7 @@
             <AppBarSeparator Foreground="White"/>
             <AppBarButton Click="open_record" Icon="List" Label="Record" Foreground="White"/>
             <AppBarSeparator Foreground="White"/>
-            <AppBarButton Click="save" Icon="Share" Label="Export" Foreground="White"/>
+            <AppBarButton Click="Export" Icon="Share" Label="Export" Foreground="White"/>
             <AppBarSeparator Foreground="White"/>
         </CommandBar>
 
