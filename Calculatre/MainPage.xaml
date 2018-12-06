@@ -11,25 +11,36 @@
 
         <Grid x:Name="backboard"/>
 
-        <CommandBar Background="#FF2D2D30" Foreground="White" VerticalAlignment="Top">
+        <CommandBar DefaultLabelPosition="Right" OverflowButtonVisibility="Collapsed" VerticalAlignment="Top">
             <CommandBar.Content>
-                <TextBlock x:Name="state" Text="Deg" Foreground="White" FontSize="20" Margin="10,10,10,10"/>
+                <ToggleSwitch x:Name="state" OnContent="Rad" OffContent="Deg" IsOn="False" Toggled="State_Toggled" Margin="5"/>
             </CommandBar.Content>
-            <AppBarToggleButton Label="Mode" Checked="_radian" Unchecked="_scale" Foreground="White">
-                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xEB05;" />
-            </AppBarToggleButton>
-            <AppBarSeparator Foreground="White"/>
-            <AppBarButton Click="open_record" Icon="List" Label="Record" Foreground="White"/>
-            <AppBarSeparator Foreground="White"/>
-            <AppBarButton Click="Export" Icon="Share" Label="Export" Foreground="White"/>
-            <AppBarSeparator Foreground="White"/>
+            <AppBarButton Tapped="Flyout_Tapped" Icon="List" Label="Record">
+                <FlyoutBase.AttachedFlyout>
+                    <Flyout>
+                        <StackPanel>
+                            <ListView x:Name="record_list" ItemsSource="{Binding History}" IsItemClickEnabled="True" ItemClick="Record_ItemClick" SelectionMode="Single">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Formulation}"/>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                            <StackPanel Orientation="Horizontal">
+                                <InkToolbarCustomToolButton Click="Export" Content="&#xE72D;" FontFamily="Segoe MDL2 Assets"/>
+                                <InkToolbarCustomToolButton Click="Deleterecord" Content="&#xE107;" FontFamily="Segoe MDL2 Assets"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Flyout>
+                </FlyoutBase.AttachedFlyout>
+            </AppBarButton>
         </CommandBar>
 
         <Grid Margin="0,47,0,0" >
 
             <Grid.Resources>
                 <Style TargetType="Button" x:Key="ButtonType">
-                    <Setter Property="Foreground" Value="White"/>
+                    <Setter Property="Foreground" Value="Black"/>
                     <Setter Property="FontSize" Value="25"/>
                     <Setter Property="VerticalAlignment" Value="Stretch"/>
                     <Setter Property="HorizontalAlignment" Value="Stretch"/>
@@ -37,7 +48,7 @@
                     <Setter Property="BorderThickness" Value="0.5"/>
                 </Style>
                 <Style TargetType="RepeatButton" x:Key="RepeatButtonType">
-                    <Setter Property="Foreground" Value="White"/>
+                    <Setter Property="Foreground" Value="Black"/>
                     <Setter Property="FontSize" Value="25"/>
                     <Setter Property="VerticalAlignment" Value="Stretch"/>
                     <Setter Property="HorizontalAlignment" Value="Stretch"/>
@@ -52,13 +63,13 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="6*"/>
                 </Grid.RowDefinitions>
-                <ScrollViewer Grid.Row="0" Background="#88FFFFFF" ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollBarVisibility="Disabled"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                <ScrollViewer Grid.Row="0" ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Margin="10">
                     <TextBlock x:Name="result" FontSize="35" TextWrapping="Wrap"/>
                 </ScrollViewer>
-                <ScrollViewer Grid.Row="1" Background="#88FFFFFF" ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollBarVisibility="Disabled"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                <ScrollViewer Grid.Row="1" ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Margin="10">
                     <TextBlock x:Name="_result" FontSize="35" TextWrapping="Wrap"/>
                 </ScrollViewer>
-                <Grid Grid.Row="2" Background="#886A6A8A" BorderBrush="SkyBlue" BorderThickness="0.5">
+                <Grid Grid.Row="2" BorderBrush="SkyBlue" BorderThickness="0.5">
                     <Grid.RowDefinitions>
                         <RowDefinition/>
                         <RowDefinition/>
@@ -76,64 +87,46 @@
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <Button Click="before"  Content="(" Grid.Row="0" Grid.Column="0" Style="{StaticResource ButtonType}"/>
-                    <Button Click="after" Content="）" Grid.Row="0" Grid.Column="1" Style="{StaticResource ButtonType}"/>
-                    <Button Click="sqrt" Content="√" Grid.Row="0" Grid.Column="2" Style="{StaticResource ButtonType}"/>
-                    <Button Click="fac" Content="!" Grid.Row="0" Grid.Column="3" Style="{StaticResource ButtonType}"/>
+                    <Button Click="Before"  Content="(" Grid.Row="0" Grid.Column="0" Style="{StaticResource ButtonType}"/>
+                    <Button Click="After" Content="）" Grid.Row="0" Grid.Column="1" Style="{StaticResource ButtonType}"/>
+                    <Button Click="Sqrt" Content="√" Grid.Row="0" Grid.Column="2" Style="{StaticResource ButtonType}"/>
+                    <Button Click="Fac" Content="!" Grid.Row="0" Grid.Column="3" Style="{StaticResource ButtonType}"/>
                     <Button Click="Clear" Content="C" Grid.Row="0" Grid.Column="4" Style="{StaticResource ButtonType}"/>
-                    <Button Click="division" Content="/" Grid.Row="0" Grid.Column="5" Style="{StaticResource ButtonType}"/>
-                    <Button Click="multi" Content="*" Grid.Row="0" Grid.Column="6" Style="{StaticResource ButtonType}"/>
-                    <RepeatButton Click="_delete" Content="&#xE750;" Delay="200" Interval="200" FontFamily="Segoe MDL2 Assets" Grid.Row="0" Grid.Column="7" Style="{StaticResource RepeatButtonType}"/>
-                    <Button Click="sin"  Content="sin" Grid.Row="1" Grid.Column="0" Style="{StaticResource ButtonType}"/>
-                    <Button Click="cos" Content="cos" Grid.Row="1" Grid.Column="1" Style="{StaticResource ButtonType}"/>
-                    <Button Click="tan" Content="tan" Grid.Row="1" Grid.Column="2" Style="{StaticResource ButtonType}"/>
-                    <Button Click="ln" Content="ln" Grid.Row="2" Grid.Column="3" Style="{StaticResource ButtonType}"/>
+                    <Button Click="Division" Content="/" Grid.Row="0" Grid.Column="5" Style="{StaticResource ButtonType}"/>
+                    <Button Click="Multi" Content="*" Grid.Row="0" Grid.Column="6" Style="{StaticResource ButtonType}"/>
+                    <RepeatButton Click="Delete" Content="&#xE750;" Delay="200" Interval="200" FontFamily="Segoe MDL2 Assets" Grid.Row="0" Grid.Column="7" Style="{StaticResource RepeatButtonType}"/>
+                    <Button Click="Sin"  Content="sin" Grid.Row="1" Grid.Column="0" Style="{StaticResource ButtonType}"/>
+                    <Button Click="Cos" Content="cos" Grid.Row="1" Grid.Column="1" Style="{StaticResource ButtonType}"/>
+                    <Button Click="Tan" Content="tan" Grid.Row="1" Grid.Column="2" Style="{StaticResource ButtonType}"/>
+                    <Button Click="Ln" Content="ln" Grid.Row="2" Grid.Column="3" Style="{StaticResource ButtonType}"/>
                     <Button Click="_7" Content="7" Grid.Row="1" Grid.Column="4" Style="{StaticResource ButtonType}"/>
                     <Button Click="_8"  Content="8" Grid.Row="1" Grid.Column="5" Style="{StaticResource ButtonType}"/>
                     <Button Click="_9" Content="9" Grid.Row="1" Grid.Column="6" Style="{StaticResource ButtonType}"/>
-                    <Button Click="minus" Content="-" Grid.Row="1" Grid.Column="7" Style="{StaticResource ButtonType}"/>
-                    <Button Click="arcsin" Content="asin" Grid.Row="2" Grid.Column="0" Style="{StaticResource ButtonType}"/>
-                    <Button Click="arccos" Content="acos" Grid.Row="2" Grid.Column="1" Style="{StaticResource ButtonType}"/>
-                    <Button Click="arctan"  Content="atan" Grid.Row="2" Grid.Column="2" Style="{StaticResource ButtonType}"/>
-                    <Button Click="log" Content="lg" Grid.Row="3" Grid.Column="3" Style="{StaticResource ButtonType}"/>
+                    <Button Click="Minus" Content="-" Grid.Row="1" Grid.Column="7" Style="{StaticResource ButtonType}"/>
+                    <Button Click="Arcsin" Content="asin" Grid.Row="2" Grid.Column="0" Style="{StaticResource ButtonType}"/>
+                    <Button Click="Arccos" Content="acos" Grid.Row="2" Grid.Column="1" Style="{StaticResource ButtonType}"/>
+                    <Button Click="Arctan"  Content="atan" Grid.Row="2" Grid.Column="2" Style="{StaticResource ButtonType}"/>
+                    <Button Click="Log" Content="lg" Grid.Row="3" Grid.Column="3" Style="{StaticResource ButtonType}"/>
                     <Button Click="_4" Content="4" Grid.Row="2" Grid.Column="4" Style="{StaticResource ButtonType}"/>
                     <Button Click="_5" Content="5" Grid.Row="2" Grid.Column="5" Style="{StaticResource ButtonType}"/>
                     <Button Click="_6" Content="6" Grid.Row="2" Grid.Column="6" Style="{StaticResource ButtonType}"/>
-                    <Button Click="add" Content="+" Grid.Row="2" Grid.Column="7" Style="{StaticResource ButtonType}"/>
-                    <Button Click="sinh" Content="sinh" Grid.Row="3" Grid.Column="0" Style="{StaticResource ButtonType}"/>
-                    <Button Click="cosh" Content="cosh" Grid.Row="3" Grid.Column="1" Style="{StaticResource ButtonType}"/>
-                    <Button Click="tanh"  Content="tanh" Grid.Row="3" Grid.Column="2" Style="{StaticResource ButtonType}"/>
-                    <Button Click="exponent" Content="^" Grid.Row="1" Grid.Column="3" Style="{StaticResource ButtonType}"/>
+                    <Button Click="Add" Content="+" Grid.Row="2" Grid.Column="7" Style="{StaticResource ButtonType}"/>
+                    <Button Click="Sinh" Content="sinh" Grid.Row="3" Grid.Column="0" Style="{StaticResource ButtonType}"/>
+                    <Button Click="Cosh" Content="cosh" Grid.Row="3" Grid.Column="1" Style="{StaticResource ButtonType}"/>
+                    <Button Click="Tanh"  Content="tanh" Grid.Row="3" Grid.Column="2" Style="{StaticResource ButtonType}"/>
+                    <Button Click="Exponent" Content="^" Grid.Row="1" Grid.Column="3" Style="{StaticResource ButtonType}"/>
                     <Button Click="_1" Content="1" Grid.Row="3" Grid.Column="4" Style="{StaticResource ButtonType}"/>
                     <Button Click="_2" Content="2" Grid.Row="3" Grid.Column="5" Style="{StaticResource ButtonType}"/>
                     <Button Click="_3" Content="3" Grid.Row="3" Grid.Column="6" Style="{StaticResource ButtonType}"/>
-                    <Button Click="make" Content="=" Grid.Row="3" Grid.Column="7" Grid.RowSpan="2" Style="{StaticResource ButtonType}"/>
+                    <Button Click="Make" Content="=" Grid.Row="3" Grid.Column="7" Grid.RowSpan="2" Style="{StaticResource ButtonType}"/>
                     <Button Click="Ans" Content="Ans" Grid.Row="4" Grid.Column="3" Style="{StaticResource ButtonType}"/>
-                    <Button Click="pi"  Content="&#x3C0;" Grid.Row="4" Grid.Column="1" Style="{StaticResource ButtonType}"/>
-                    <Button Click="e" Content="e" Grid.Row="4" Grid.Column="2" Style="{StaticResource ButtonType}"/>
-                    <Button Click="exp" Content="exp" Grid.Row="4" Grid.Column="0" Style="{StaticResource ButtonType}"/>
+                    <Button Click="Pi"  Content="&#x3C0;" Grid.Row="4" Grid.Column="1" Style="{StaticResource ButtonType}"/>
+                    <Button Click="E" Content="e" Grid.Row="4" Grid.Column="2" Style="{StaticResource ButtonType}"/>
+                    <Button Click="Exp" Content="exp" Grid.Row="4" Grid.Column="0" Style="{StaticResource ButtonType}"/>
                     <Button Click="_0" Content="0" Grid.Row="4" Grid.Column="4" Grid.ColumnSpan="2" Style="{StaticResource ButtonType}"/>
-                    <Button Click="point" Content="." Grid.Row="4" Grid.Column="6" Style="{StaticResource ButtonType}"/>
+                    <Button Click="Point" Content="." Grid.Row="4" Grid.Column="6" Style="{StaticResource ButtonType}"/>
                 </Grid>
             </Grid>
-            <SplitView x:Name="cal_record" OpenPaneLength="250" CompactPaneLength="0" PaneBackground="White" DisplayMode="CompactOverlay">
-                <SplitView.Pane>
-                    <ScrollViewer Grid.Row="0" ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollBarVisibility="Auto" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                        <Grid>
-                            <Grid x:Name="splitboard"/>
-
-                            <ListView x:Name="record_list" Background="#88FFFFFF" ItemsSource="{Binding Items}" IsItemClickEnabled="True" ItemClick="record_list_ItemClick" SelectionMode="Single">
-                                <ListView.ItemTemplate>
-                                    <DataTemplate>
-                                        <TextBlock Text="{Binding Record}" FontSize="18"/>
-                                    </DataTemplate>
-                                </ListView.ItemTemplate>
-                            </ListView>
-                            <Button Click="_deleterecord" Content="&#xE107;" FontFamily="Segoe MDL2 Assets" Width="48" Height="48" VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
-                        </Grid>
-                    </ScrollViewer>
-                </SplitView.Pane>
-            </SplitView>
         </Grid>
 
     </Grid>

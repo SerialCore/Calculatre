@@ -2,6 +2,7 @@
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation.Metadata;
+using Windows.Storage;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -31,7 +32,7 @@ namespace Calculatre
         /// <param name="e">有关启动请求和过程的详细信息。</param>
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
-            launchEffect();
+            LaunchEffect();
 
             Frame rootFrame = Window.Current.Content as Frame;
 
@@ -67,33 +68,12 @@ namespace Calculatre
             }
         }
 
-        private void launchEffect()
+        private async void LaunchEffect()
         {
             // 强制横屏
             Windows.Graphics.Display.DisplayInformation.AutoRotationPreferences = Windows.Graphics.Display.DisplayOrientations.Landscape;
 
-            var view = Windows.UI.ViewManagement.ApplicationView.GetForCurrentView();
-
-            // active
-            view.TitleBar.BackgroundColor = Color.FromArgb(255, 45, 45, 48);
-            view.TitleBar.ForegroundColor = Colors.White;
-
-            // inactive
-            view.TitleBar.InactiveBackgroundColor = Color.FromArgb(255, 45, 45, 48);
-            view.TitleBar.InactiveForegroundColor = Colors.White;
-
-            // button
-            view.TitleBar.ButtonBackgroundColor = Color.FromArgb(255, 45, 45, 48);
-            view.TitleBar.ButtonForegroundColor = Colors.White;
-
-            view.TitleBar.ButtonHoverBackgroundColor = Color.FromArgb(255, 75, 75, 78);
-            view.TitleBar.ButtonHoverForegroundColor = Colors.White;
-
-            view.TitleBar.ButtonPressedBackgroundColor = Color.FromArgb(255, 75, 75, 78);
-            view.TitleBar.ButtonPressedForegroundColor = Colors.White;
-
-            view.TitleBar.ButtonInactiveBackgroundColor = Color.FromArgb(255, 45, 45, 48);
-            view.TitleBar.ButtonInactiveForegroundColor = Colors.White;
+            StorageFile file = await ApplicationData.Current.LocalFolder.CreateFileAsync("Cal-Record.txt", CreationCollisionOption.OpenIfExists);
         }
 
         /// <summary>
