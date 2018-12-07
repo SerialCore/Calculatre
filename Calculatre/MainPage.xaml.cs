@@ -79,14 +79,14 @@ namespace Calculatre
         private void Before(object sender, RoutedEventArgs e)
         {
             my_formula.Append("(");
-            result.Text = my_formula.ToString();
+            formula.Text = my_formula.ToString();
             last[count++] = "(";
         }
 
         private void After(object sender, RoutedEventArgs e)
         {
             my_formula.Append(")");
-            result.Text = my_formula.ToString();
+            formula.Text = my_formula.ToString();
             last[count++] = ")";
         }
 
@@ -95,13 +95,13 @@ namespace Calculatre
             if (count == 0)
             {
                 my_formula.Append(mycalculator._result.ToString("G") + "^(1/");
-                result.Text = my_formula.ToString();
+                formula.Text = my_formula.ToString();
                 last[count++] = mycalculator._result.ToString("G") + "^(1/";
             }
             else
             {
                 my_formula.Append("^(1/");
-                result.Text = my_formula.ToString();
+                formula.Text = my_formula.ToString();
                 last[count++] = "^(1/";
             }
         }
@@ -109,8 +109,8 @@ namespace Calculatre
         private void Clear(object sender, RoutedEventArgs e)
         {
             my_formula.Clear();
+            formula.Text = "";
             result.Text = "";
-            _result.Text = "";
         }
 
         private void Division(object sender, RoutedEventArgs e)
@@ -118,13 +118,13 @@ namespace Calculatre
             if (count == 0)
             {
                 my_formula.Append(mycalculator._result.ToString("G") + "/");
-                result.Text = my_formula.ToString();
+                formula.Text = my_formula.ToString();
                 last[count++] = mycalculator._result.ToString("G") + "/";
             }
             else
             {
                 my_formula.Append("/");
-                result.Text = my_formula.ToString();
+                formula.Text = my_formula.ToString();
                 last[count++] = "/";
             }
         }
@@ -134,69 +134,69 @@ namespace Calculatre
             if (count == 0)
             {
                 my_formula.Append(mycalculator._result.ToString("G") + "*");
-                result.Text = my_formula.ToString();
+                formula.Text = my_formula.ToString();
                 last[count++] = mycalculator._result.ToString("G") + "*";
             }
             else
             {
                 my_formula.Append("*");
-                result.Text = my_formula.ToString();
+                formula.Text = my_formula.ToString();
                 last[count++] = "*";
             }
         }
 
         private void Delete(object sender, RoutedEventArgs e)
         {
-            if (result.Text != "")
+            if (formula.Text != "")
             {
                 count--;
                 temp = my_formula.ToString();
                 temp = temp.Substring(0, temp.Length - last[count].Length);      //去掉最后一个字符
                 my_formula.Clear();
                 my_formula.Append(temp);
-                result.Text = my_formula.ToString();
+                formula.Text = my_formula.ToString();
             }
         }
 
         private void Arcsin(object sender, RoutedEventArgs e)
         {
             my_formula.Append("arcsin(");
-            result.Text = my_formula.ToString();
+            formula.Text = my_formula.ToString();
             last[count++] = "arcsin(";
         }
 
         private void Arccos(object sender, RoutedEventArgs e)
         {
             my_formula.Append("arccos(");
-            result.Text = my_formula.ToString();
+            formula.Text = my_formula.ToString();
             last[count++] = "arccos(";
         }
 
         private void Arctan(object sender, RoutedEventArgs e)
         {
             my_formula.Append("arctan(");
-            result.Text = my_formula.ToString();
+            formula.Text = my_formula.ToString();
             last[count++] = "arctan(";
         }
 
         private void _7(object sender, RoutedEventArgs e)
         {
             my_formula.Append("7");
-            result.Text = my_formula.ToString();
+            formula.Text = my_formula.ToString();
             last[count++] = "7";
         }
 
         private void _8(object sender, RoutedEventArgs e)
         {
             my_formula.Append("8");
-            result.Text = my_formula.ToString();
+            formula.Text = my_formula.ToString();
             last[count++] = "8";
         }
 
         private void _9(object sender, RoutedEventArgs e)
         {
             my_formula.Append("9");
-            result.Text = my_formula.ToString();
+            formula.Text = my_formula.ToString();
             last[count++] = "9";
         }
 
@@ -205,13 +205,13 @@ namespace Calculatre
             if (count == 0)
             {
                 my_formula.Append(mycalculator._result.ToString("G") + "-");
-                result.Text = my_formula.ToString();
+                formula.Text = my_formula.ToString();
                 last[count++] = mycalculator._result.ToString("G") + "-";
             }
             else
             {
                 my_formula.Append("-");
-                result.Text = my_formula.ToString();
+                formula.Text = my_formula.ToString();
                 last[count++] = "-";
             }
         }
@@ -219,28 +219,28 @@ namespace Calculatre
         private void Sin(object sender, RoutedEventArgs e)
         {
             my_formula.Append("sin(");
-            result.Text = my_formula.ToString();
+            formula.Text = my_formula.ToString();
             last[count++] = "sin(";
         }
 
         private void Sinh(object sender, RoutedEventArgs e)
         {
             my_formula.Append("sinh(");
-            result.Text = my_formula.ToString();
+            formula.Text = my_formula.ToString();
             last[count++] = "sinh(";
         }
 
         private void Cosh(object sender, RoutedEventArgs e)
         {
             my_formula.Append("cosh(");
-            result.Text = my_formula.ToString();
+            formula.Text = my_formula.ToString();
             last[count++] = "csoh(";
         }
 
         private void Tanh(object sender, RoutedEventArgs e)
         {
             my_formula.Append("tanh(");
-            result.Text = my_formula.ToString();
+            formula.Text = my_formula.ToString();
             last[count++] = "tanh(";
         }
 
@@ -249,13 +249,13 @@ namespace Calculatre
             if (count == 0)
             {
                 my_formula.Append(mycalculator._result.ToString("G") + "!");
-                result.Text = my_formula.ToString();
+                formula.Text = my_formula.ToString();
                 last[count++] = mycalculator._result.ToString("G") + "!";
             }
             else
             {
                 my_formula.Append("!");
-                result.Text = my_formula.ToString();
+                formula.Text = my_formula.ToString();
                 last[count++] = "!";
             }
         }
@@ -263,42 +263,42 @@ namespace Calculatre
         private void Exp(object sender, RoutedEventArgs e)
         {
             my_formula.Append("exp(");
-            result.Text = my_formula.ToString();
+            formula.Text = my_formula.ToString();
             last[count++] = "exp(";
         }
 
         private void Cos(object sender, RoutedEventArgs e)
         {
             my_formula.Append("cos(");
-            result.Text = my_formula.ToString();
+            formula.Text = my_formula.ToString();
             last[count++] = "cos(";
         }
 
         private void Tan(object sender, RoutedEventArgs e)
         {
             my_formula.Append("tan(");
-            result.Text = my_formula.ToString();
+            formula.Text = my_formula.ToString();
             last[count++] = "tan(";
         }
 
         private void _4(object sender, RoutedEventArgs e)
         {
             my_formula.Append("4");
-            result.Text = my_formula.ToString();
+            formula.Text = my_formula.ToString();
             last[count++] = "4";
         }
 
         private void _5(object sender, RoutedEventArgs e)
         {
             my_formula.Append("5");
-            result.Text = my_formula.ToString();
+            formula.Text = my_formula.ToString();
             last[count++] = "5";
         }
 
         private void _6(object sender, RoutedEventArgs e)
         {
             my_formula.Append("6");
-            result.Text = my_formula.ToString();
+            formula.Text = my_formula.ToString();
             last[count++] = "6";
         }
 
@@ -307,13 +307,13 @@ namespace Calculatre
             if (count == 0)
             {
                 my_formula.Append(mycalculator._result.ToString("G") + "+");
-                result.Text = my_formula.ToString();
+                formula.Text = my_formula.ToString();
                 last[count++] = mycalculator._result.ToString("G") + "+";
             }
             else
             {
                 my_formula.Append("+");
-                result.Text = my_formula.ToString();
+                formula.Text = my_formula.ToString();
                 last[count++] = "+";
             }
         }
@@ -321,14 +321,14 @@ namespace Calculatre
         private void Ln(object sender, RoutedEventArgs e)
         {
             my_formula.Append("ln(");
-            result.Text = my_formula.ToString();
+            formula.Text = my_formula.ToString();
             last[count++] = "ln(";
         }
 
         private void Log(object sender, RoutedEventArgs e)
         {
             my_formula.Append("lg(");
-            result.Text = my_formula.ToString();
+            formula.Text = my_formula.ToString();
             last[count++] = "lg(";
         }
 
@@ -337,13 +337,13 @@ namespace Calculatre
             if (count == 0)
             {
                 my_formula.Append(mycalculator._result.ToString("G") + "^(");
-                result.Text = my_formula.ToString();
+                formula.Text = my_formula.ToString();
                 last[count++] = mycalculator._result.ToString("G") + "^(";
             }
             else
             {
                 my_formula.Append("^(");
-                result.Text = my_formula.ToString();
+                formula.Text = my_formula.ToString();
                 last[count++] = "^(";
             }
         }
@@ -351,27 +351,27 @@ namespace Calculatre
         private void _1(object sender, RoutedEventArgs e)
         {
             my_formula.Append("1");
-            result.Text = my_formula.ToString();
+            formula.Text = my_formula.ToString();
             last[count++] = "1";
         }
 
         private void _2(object sender, RoutedEventArgs e)
         {
             my_formula.Append("2");
-            result.Text = my_formula.ToString();
+            formula.Text = my_formula.ToString();
             last[count++] = "2";
         }
 
         private void _3(object sender, RoutedEventArgs e)
         {
             my_formula.Append("3");
-            result.Text = my_formula.ToString();
+            formula.Text = my_formula.ToString();
             last[count++] = "3";
         }
 
         private void Make(object sender, RoutedEventArgs e)
         {
-            if (result.Text != "")
+            if (formula.Text != "")
             {
                 my_formula.Append("\0");
                 mycalculator.formula = my_formula.ToString();
@@ -382,16 +382,16 @@ namespace Calculatre
                 {
                     // 为了方便用户的使用，必需给出容错的功能，但是考虑到算法，下面的容错提示不会显示，但也不至于使应用崩溃。
                     // 保留容错提示是为了保持代码的可移植性。
-                    case 1: result.Text = "divisor = 0"; break;
-                    case 3: result.Text = "unexpected characters"; break;
-                    case 4: result.Text = "？"; break;
+                    case 1: formula.Text = "divisor = 0"; break;
+                    case 3: formula.Text = "unexpected characters"; break;
+                    case 4: formula.Text = "？"; break;
                     default:
-                        _result.Text = result.Text + " = " + mycalculator._result.ToString("G");
-                        History.Add(new Calculation { Formulation = result.Text + " = " + mycalculator._result.ToString("G"), Result = mycalculator._result.ToString("G") });
+                        result.Text = formula.Text + " = " + mycalculator._result.ToString("G");
+                        History.Add(new Calculation { Formulation = formula.Text + " = " + mycalculator._result.ToString("G"), Result = mycalculator._result.ToString("G") });
                         SaveLocal();
                         break;
                 }
-                result.Text = "";
+                formula.Text = "";
                 my_formula.Clear();
                 mycalculator.formula = "";
                 count = 0;
@@ -401,35 +401,35 @@ namespace Calculatre
         private void Ans(object sender, RoutedEventArgs e)
         {
             my_formula.Append(mycalculator._result.ToString("G"));
-            result.Text = my_formula.ToString();
+            formula.Text = my_formula.ToString();
             last[count++] = mycalculator._result.ToString("G");
         }
 
         private void Pi(object sender, RoutedEventArgs e)
         {
             my_formula.Append("pi");
-            result.Text = my_formula.ToString();
+            formula.Text = my_formula.ToString();
             last[count++] = "pi";
         }
 
         private void E(object sender, RoutedEventArgs e)
         {
             my_formula.Append("e");
-            result.Text = my_formula.ToString();
+            formula.Text = my_formula.ToString();
             last[count++] = "e";
         }
 
         private void _0(object sender, RoutedEventArgs e)
         {
             my_formula.Append("0");
-            result.Text = my_formula.ToString();
+            formula.Text = my_formula.ToString();
             last[count++] = "0";
         }
 
         private void Point(object sender, RoutedEventArgs e)
         {
             my_formula.Append(".");
-            result.Text = my_formula.ToString();
+            formula.Text = my_formula.ToString();
             last[count++] = ".";
         }
 
@@ -444,7 +444,7 @@ namespace Calculatre
             var item = e.ClickedItem as Calculation;
             // 输入计算式
             my_formula.Append(item.Result);
-            result.Text = my_formula.ToString();
+            formula.Text = my_formula.ToString();
             last[count++] = item.Result;
         }
 

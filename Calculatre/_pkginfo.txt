@@ -1,1 +1,1 @@
-C:\Users\zwxat\source\repos\Calculatre\Calculatre\bin\ARM\Release\Upload\Calculatre_3.3.42.0\Calculatre_3.3.42.0_x86_x64_arm.appxbundle
+C:\Users\zwxat\source\repos\Calculatre\Calculatre\bin\ARM\Release\Upload\Calculatre_3.5.45.0\Calculatre_3.5.45.0_x86_x64_arm.appxbundle
