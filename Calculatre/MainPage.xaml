@@ -10,7 +10,7 @@
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
         <Grid x:Name="backboard"/>
-        <Grid Background="Azure" Opacity="0.5"/>
+        <Grid Background="Beige" Opacity="0.5"/>
 
         <CommandBar DefaultLabelPosition="Right" OverflowButtonVisibility="Collapsed" VerticalAlignment="Top">
             <CommandBar.Content>
@@ -64,11 +64,11 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="6*"/>
                 </Grid.RowDefinitions>
-                <ScrollViewer Grid.Row="0" ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Margin="10">
-                    <TextBlock x:Name="formula" FontSize="35" TextWrapping="Wrap"/>
+                <ScrollViewer Grid.Row="0" ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.HorizontalScrollBarVisibility="Auto" Margin="10">
+                    <TextBlock x:Name="formula" FontSize="35"/>
                 </ScrollViewer>
-                <ScrollViewer Grid.Row="1" ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Margin="10">
-                    <TextBlock x:Name="result" FontSize="35" TextWrapping="Wrap"/>
+                <ScrollViewer Grid.Row="1" ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.HorizontalScrollBarVisibility="Auto" Margin="10">
+                    <TextBlock x:Name="result" FontSize="35"/>
                 </ScrollViewer>
                 <Grid Grid.Row="2">
                     <Grid.RowDefinitions>

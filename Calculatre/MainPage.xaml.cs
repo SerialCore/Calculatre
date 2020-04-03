@@ -33,7 +33,7 @@ namespace Calculatre
         // 用于删除字符时的间接量
         string temp;
         // 用于记录输入
-        string[] last = new string[50];
+        string[] last = new string[500];
         int count = 0;
 
         protected async override void OnNavigatedTo(NavigationEventArgs e)
@@ -386,12 +386,11 @@ namespace Calculatre
                     case 3: formula.Text = "unexpected characters"; break;
                     case 4: formula.Text = "？"; break;
                     default:
-                        result.Text = formula.Text + " = " + mycalculator._result.ToString("G");
+                        result.Text = mycalculator._result.ToString("G");
                         History.Add(new Calculation { Formulation = formula.Text + " = " + mycalculator._result.ToString("G"), Result = mycalculator._result.ToString("G") });
                         SaveLocal();
                         break;
                 }
-                formula.Text = "";
                 my_formula.Clear();
                 mycalculator.formula = "";
                 count = 0;
