@@ -17,8 +17,7 @@ int main(int argc, char* argv[])
     {
         if (!strcmp(argv[1], "help\0"))
         {
-            cout << "supporting operations: ^, !, e, pi, +, -, *, /" << endl;
-            cout << "sin(), cos(), tan(), asin(), acos(), atan(), sinh(), cosh(), tanh(), exp(), ln(), lg()" << endl;
+            gethelp();
         }
         else
         {
@@ -31,20 +30,31 @@ void rolling()
 {
     string input;
     cout << "Calculatre@ " << ends;
-    cin >> noskipws >> input;
+    cin >> input;
 
     while (!input.empty())
     {
-        calculator(const_cast<char*>(input.c_str()));
+        if (!input.compare("quit"))
+        {
+            break;
+        }
+        else if (!input.compare("help"))
+        {
+            gethelp();
+        }
+        else
+        {
+            calculator(const_cast<char*>(input.c_str()));
+        }
 
         cout << "Calculatre@ " << ends;
-        cin >> noskipws >> input;
+        cin >> input;
     }
 }
 
 void calculator(char* _formula)
 {
-    calculate* cal = new calculate( _formula);
+    calculate* cal = new calculate(_formula);
     cal->start();
 
     switch (cal->error)
@@ -61,4 +71,11 @@ void calculator(char* _formula)
         cout << cal->formula << " = " << cal->result << endl;
         break;
     }
+}
+
+void gethelp()
+{
+    cout << "supporting operations: ^, !, e, pi, +, -, *, /" << endl;
+    cout << "sin(), cos(), tan(), asin(), acos(), atan(), sinh(), cosh(), tanh(), exp(), ln(), lg()" << endl;
+    cout << "Please enter \"quit\" to exit this application." << endl;
 }

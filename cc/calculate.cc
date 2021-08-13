@@ -20,6 +20,7 @@ calculate::calculate(char* _formula)
 
 calculate::~calculate()
 {
+    delete this->formula;
 }
 
 void calculate::next(int _n)
