@@ -1,7 +1,6 @@
 class calculate
 {
 private:
-    /* data */
     char        input;          // the current char
     int         i;              // the char tracer
     int         length;         // the length of whole formula
@@ -19,7 +18,7 @@ public:
 
     char*       formula;        // the formula as a string
     double      result;         // the return of plus(), the final result of calculation
-    int         error;          // 1. div is 0; 3. char is unknown; 4. formula is empty
+    int         error;          // 1. div is 0; 2. char is unknown;
 
     void        start();        // the starter of this calculator
 };

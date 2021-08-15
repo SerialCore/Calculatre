@@ -23,6 +23,13 @@ calculate::~calculate()
     delete this->formula;
 }
 
+void calculate::start()
+{
+    // get the first char and luanch the calculator
+    next(0);
+    result = plus();
+}
+
 void calculate::next(int _n)
 {
     i += _n;
@@ -30,13 +37,6 @@ void calculate::next(int _n)
     {
         input = formula[i];
     }
-}
-
-void calculate::start()
-{
-    // get the first char and luanch the calculator
-    next(0);
-    result = plus();
 }
 
 double calculate::plus()
@@ -154,7 +154,7 @@ double calculate::high()
         // value = atof(num.c_str());
         next(0);
     }
-    else if (input == 'e')        //用来识别'e'
+    else if (input == 'e')
     {
         next(1);
         if (input != 'x')
@@ -178,7 +178,7 @@ double calculate::high()
             }
         }
     }
-    else if (input == 'p')        //用来识别'pi'   //程序运行时，似乎不能使用输入法输入'π'
+    else if (input == 'p')
     {
         next(1);
         if (input == 'i')
@@ -190,7 +190,7 @@ double calculate::high()
     else if (input == 'l')
     {
         next(1);
-        if (input == 'g')         //判断以10为底的指数
+        if (input == 'g')
         {
             next(1);
             if (input == '(')
@@ -208,7 +208,7 @@ double calculate::high()
                 }
             }
         }
-        else if (input == 'n')    //判断以e为底的指数
+        else if (input == 'n')
         {
             next(1);
             if (input == '(')
@@ -227,7 +227,7 @@ double calculate::high()
             }
         }
     }
-    else if (input == 's')    //判断sin()
+    else if (input == 's')
     {
         next(3);
         if (input == '(')
@@ -263,7 +263,7 @@ double calculate::high()
             }
         }
     }
-    else if (input == 'c')      //判断cos()
+    else if (input == 'c')
     {
         next(3);
         if (input == '(')
@@ -299,7 +299,7 @@ double calculate::high()
             }
         }
     }
-    else if (input == 't')     //判断tan()
+    else if (input == 't')
     {
         next(3);
         if (input == '(')
@@ -335,10 +335,10 @@ double calculate::high()
             }
         }
     }
-    else if (input == 'a')       //判断反三角函数
+    else if (input == 'a')
     {
-        next(3);
-        if (input == 's')        //判断反正弦
+        next(1);
+        if (input == 's')
         {
             next(3);
             if (input == '(')
@@ -356,7 +356,7 @@ double calculate::high()
                 }
             }
         }
-        else if (input == 'c') //判断反余弦
+        else if (input == 'c')
         {
             next(3);
             if (input == '(')
@@ -374,7 +374,7 @@ double calculate::high()
                 }
             }
         }
-        else if (input == 't')    //判断反正切
+        else if (input == 't')
         {
             next(3);
             if (input == '(')
