@@ -1,0 +1,2 @@
+MainPackage=C:\Users\seria\source\repos\SerialCore\Calculatre\csharp-uwp\bin\ARM\Release\Calculatre_4.0.0.0_ARM.msix
+SymbolPackage=C:\Users\seria\source\repos\SerialCore\Calculatre\csharp-uwp\obj\ARM\Release\Symbols\Calculatre_4.0.0.0_ARM.appxsym

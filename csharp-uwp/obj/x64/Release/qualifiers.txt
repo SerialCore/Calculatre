@@ -1,0 +1,4 @@
+AlternateForm=LIGHTUNPLATED
+AlternateForm=UNPLATED
+Scale=100
+TargetSize=16
