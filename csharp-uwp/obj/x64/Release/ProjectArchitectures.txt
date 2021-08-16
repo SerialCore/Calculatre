@@ -1,1 +1,0 @@
-C:\Users\seria\source\repos\SerialCore\Calculatre\csharp-uwp\Calculatre.csproj;x64
