@@ -19,13 +19,13 @@ namespace Calculatre
             }
             else
             {
-                if (args[1].Equals("help"))
+                if (args[0].Equals("help"))
                 {
                     GetHelp();
                 }
                 else
                 {
-                    Calculator(args[1]);
+                    Calculator(args[0]);
                 }
             }
         }
