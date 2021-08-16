@@ -237,7 +237,7 @@ namespace Calculatre
                 if (input == '(')
                 {
                     Next(1);
-                    value = checkPrecision(System.Math.Sin((Plus())));
+                    value = checkPrecision(System.Math.Sin(Plus()));
                     if (input == ')')
                     {
                         Next(1);
@@ -254,7 +254,7 @@ namespace Calculatre
                     if (input == '(')
                     {
                         Next(1);
-                        value = checkPrecision(System.Math.Sinh((Plus())));
+                        value = checkPrecision(System.Math.Sinh(Plus()));
                         if (input == ')')
                         {
                             Next(1);
@@ -266,8 +266,6 @@ namespace Calculatre
                         }
                     }
                 }
-
-
             }
             else if (input == 'c')
             {
@@ -275,7 +273,7 @@ namespace Calculatre
                 if (input == '(')
                 {
                     Next(1);
-                    value = checkPrecision(System.Math.Cos((Plus())));
+                    value = checkPrecision(System.Math.Cos(Plus()));
                     if (input == ')')
                     {
                         Next(1);
@@ -292,7 +290,7 @@ namespace Calculatre
                     if (input == '(')
                     {
                         Next(1);
-                        value = checkPrecision(System.Math.Cosh((Plus())));
+                        value = checkPrecision(System.Math.Cosh(Plus()));
                         if (input == ')')
                         {
                             Next(1);
@@ -311,7 +309,7 @@ namespace Calculatre
                 if (input == '(')
                 {
                     Next(1);
-                    value = checkPrecision(System.Math.Tan((Plus())));
+                    value = checkPrecision(System.Math.Tan(Plus()));
                     if (input == ')')
                     {
                         Next(1);
@@ -328,7 +326,7 @@ namespace Calculatre
                     if (input == '(')
                     {
                         Next(1);
-                        value = checkPrecision(System.Math.Tanh((Plus())));
+                        value = checkPrecision(System.Math.Tanh(Plus()));
                         if (input == ')')
                         {
                             Next(1);
@@ -397,7 +395,6 @@ namespace Calculatre
                             return 0.0;
                         }
                     }
-
                 }
             }
             if (input == '!')
