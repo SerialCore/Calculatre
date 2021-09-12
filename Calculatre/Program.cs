@@ -33,25 +33,25 @@ namespace Calculatre
         static void Rolling()
         {
             string input;
-            Console.WriteLine("Calculatre@ ------------------------------//");
+            Console.Write("Calculatre@ ");
             input = Console.ReadLine();
 
-            while (!input.Equals(""))
+            while (!input.Equals("quit"))
             {
-                if (input.Equals("quit"))
-                {
-                    break;
-                }
-                else if (input.Equals("help"))
+                if (input.Equals("help"))
                 {
                     GetHelp();
+                }
+                else if (input.Equals(""))
+                {
+                    // do nothing
                 }
                 else
                 {
                     Calculator(input);
                 }
 
-                Console.WriteLine("Calculatre@ ------------------------------//");
+                Console.Write("Calculatre@ ");
                 input = Console.ReadLine();
             }
         }
