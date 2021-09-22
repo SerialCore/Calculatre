@@ -42,6 +42,11 @@ namespace Calculatre
                 {
                     GetHelp();
                 }
+
+                if (input.Equals("clear"))
+                {
+                    ConsoleClear();
+                }
                 else if (input.Equals(""))
                 {
                     // do nothing
@@ -76,6 +81,11 @@ namespace Calculatre
                     Console.WriteLine($"{cal.formula} = {cal.result}");
                     break;
             }
+        }
+
+        static void ConsoleClear()
+        {
+            Console.Clear();
         }
 
         static void GetHelp()
