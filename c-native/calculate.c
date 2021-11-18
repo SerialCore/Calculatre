@@ -1,57 +1,70 @@
-#include <cmath>
-#include <string>
+#include <math.h>
+#include <stdlib.h>
 #include "calculate.h"
 
-using namespace std;
+// private members
+struct _calculate
+{
+    char*       formula;        // the formula as a string
+    int         length;         // the length of whole formula
+    char        input;          // the current char
+    int         i;              // the char tracer
+    
+    double      result;         // the return of plus(), the final result of calculation
+    int         error;          // 1. div is 0; 2. char is unknown;
+} this;
+
+void    next(int _n);   // gets the next char of sequence
+double  plus();
+double  multi();
+double  power();
+double  signal();
+double  high();         // includes sin, cos, tan, asin, acos, atan, sinh, cosh, tanh, ln, lg
 
 
-calculate::calculate(char* _formula)
+void start(struct calculate* current)
 {
     // initialize the variates
-    this->formula = _formula;
-    this->i = 0;
-    this->error = 0;
-    this->length = 0;
-    while (formula[length] != '\0')
+    this.formula = current->formula;
+    this.i = 0;
+    this.error = 0;
+    this.length = 0;
+    while (this.formula[this.length] != '\0')
     {
-        length++;
+        this.length++;
     }
-}
 
-calculate::~calculate()
-{
-    delete this->formula;
-}
-
-void calculate::start()
-{
     // get the first char and launch the calculator
     next(0);
-    result = plus();
+    this.result = plus();
+
+    // return the result
+    current->result = this.result;
+    current->error = this.error;
 }
 
-void calculate::next(int _n)
+void next(int _n)
 {
-    i += _n;
-    if (i <= length - 1)
+    this.i += _n;
+    if (this.i <= this.length - 1)
     {
-        input = formula[i];
+        this.input = this.formula[this.i];
     }
 }
 
-double calculate::plus()
+double plus()
 {
     double value = 0.0;
     // indirect recursion
     value = multi();
-    while ((input == '+' || input == '-') && i != 0 && formula[i - 1] != '(')
+    while ((this.input == '+' || this.input == '-') && this.i != 0 && this.formula[this.i - 1] != '(')
     {
-        if (input == '+')
+        if (this.input == '+')
         {
             next(1);
             value += multi();
         }
-        else if (input == '-')
+        else if (this.input == '-')
         {
             next(1);
             value -= multi();
@@ -60,25 +73,25 @@ double calculate::plus()
     return value;
 }
 
-double calculate::multi()
+double multi()
 {
     double div;
     double value = 0.0;
     value = power();
-    while ((input == '*') || (input == '/'))
+    while ((this.input == '*') || (this.input == '/'))
     {
-        if (input == '*')
+        if (this.input == '*')
         {
             next(1);
             value *= power();
         }
-        else if (input == '/')
+        else if (this.input == '/')
         {
             next(1);
             div = power();
             if (div == 0)
             {
-                error = 1;
+                this.error = 1;
                 return 0.0;
             }
             value /= div;
@@ -87,13 +100,13 @@ double calculate::multi()
     return value;
 }
 
-double calculate::power()
+double power()
 {
     double value = 0.0;
     value = signal();
-    while (input == '^')
+    while (this.input == '^')
     {
-        if (input == '^')
+        if (this.input == '^')
         {
             next(1);
             value = pow(value, signal());
@@ -102,298 +115,297 @@ double calculate::power()
     return value;
 }
 
-double calculate::signal()
+double signal()
 {
     double value = 0.0;
-    if (input == '-' && (i == 0 || formula[i - 1] == '('))
+    if (this.input == '-' && (this.i == 0 || this.formula[this.i - 1] == '('))
     {
         next(1);
         value = -high();
     }
-    else if (input == '+' && (i == 0 || formula[i - 1] == '('))
+    else if (this.input == '+' && (this.i == 0 || this.formula[this.i - 1] == '('))
     {
         next(1);
         value = high();
     }
-    else if (input != '-' && input != '+' && input != '\0')
+    else if (this.input != '-' && this.input != '+' && this.input != '\0')
     {
         value = high();
     }
     return value;
 }
 
-double calculate::high()
+double high()
 {
     double value = 0.0;
-    if (input == '(')
+    if (this.input == '(')
     {
         next(1);
         // the operation in the bracket maybe plus
         value = plus();
-        if (input == ')')
+        if (this.input == ')')
         {
             next(1);
         }
         else
         {
-            error = 2;
+            this.error = 2;
             return 0.0;
         }
     }
-    else if (input >= '0' && input <= '9')
+    else if (this.input >= '0' && this.input <= '9')
     {
-        string num = "";
-        for (; formula[i] >= '0' && formula[i] <= '9' || formula[i] == '.';)
+        char num[20] = "";
+        for (int j = 0; this.formula[this.i] >= '0' && this.formula[this.i] <= '9' || this.formula[this.i] == '.'; j++)
         {
-            num += formula[i];
-            i++;
-            if (i > length - 1)
+            num[j] += this.formula[this.i];
+            this.i++;
+            if (this.i > this.length - 1)
                 break;
         }
-        value = stod(num);
-        // value = atof(num.c_str());
+        value = atof(num);
         next(0);
     }
-    else if (input == 'e')
+    else if (this.input == 'e')
     {
         next(1);
-        if (input != 'x')
+        if (this.input != 'x')
             value = M_E;
         else
         {
             next(2);
-            if (input == '(')
+            if (this.input == '(')
             {
                 next(1);
                 value = exp(plus());
-                if (input == ')')
+                if (this.input == ')')
                 {
                     next(1);
                 }
                 else
                 {
-                    error = 2;
+                    this.error = 2;
                     return 0.0;
                 }
             }
         }
     }
-    else if (input == 'p')
+    else if (this.input == 'p')
     {
         next(1);
-        if (input == 'i')
+        if (this.input == 'i')
         {
             value = M_PI;
             next(1);
         }
     }
-    else if (input == 'l')
+    else if (this.input == 'l')
     {
         next(1);
-        if (input == 'g')
+        if (this.input == 'g')
         {
             next(1);
-            if (input == '(')
+            if (this.input == '(')
             {
                 next(1);
                 value = log10(plus());
-                if (input == ')')
+                if (this.input == ')')
                 {
                     next(1);
                 }
                 else
                 {
-                    error = 2;
+                    this.error = 2;
                     return 0.0;
                 }
             }
         }
-        else if (input == 'n')
+        else if (this.input == 'n')
         {
             next(1);
-            if (input == '(')
+            if (this.input == '(')
             {
                 next(1);
                 value = log(plus());
-                if (input == ')')
+                if (this.input == ')')
                 {
                     next(1);
                 }
                 else
                 {
-                    error = 2;
+                    this.error = 2;
                     return 0.0;
                 }
             }
         }
     }
-    else if (input == 's')
+    else if (this.input == 's')
     {
         next(3);
-        if (input == '(')
+        if (this.input == '(')
         {
             next(1);
             value = sin(plus());
-            if (input == ')')
+            if (this.input == ')')
             {
                 next(1);
             }
             else
             {
-                error = 2;
+                this.error = 2;
                 return 0.0;
             }
         }
-        if (input == 'h')
+        if (this.input == 'h')
         {
             next(1);
-            if (input == '(')
+            if (this.input == '(')
             {
                 next(1);
                 value = sinh(plus());
-                if (input == ')')
+                if (this.input == ')')
                 {
                     next(1);
                 }
                 else
                 {
-                    error = 2;
+                    this.error = 2;
                     return 0.0;
                 }
             }
         }
     }
-    else if (input == 'c')
+    else if (this.input == 'c')
     {
         next(3);
-        if (input == '(')
+        if (this.input == '(')
         {
             next(1);
             value = cos(plus());
-            if (input == ')')
+            if (this.input == ')')
             {
                 next(1);
             }
             else
             {
-                error = 2;
+                this.error = 2;
                 return 0.0;
             }
         }
-        if (input == 'h')
+        if (this.input == 'h')
         {
             next(1);
-            if (input == '(')
+            if (this.input == '(')
             {
                 next(1);
                 value = cosh(plus());
-                if (input == ')')
+                if (this.input == ')')
                 {
                     next(1);
                 }
                 else
                 {
-                    error = 2;
+                    this.error = 2;
                     return 0.0;
                 }
             }
         }
     }
-    else if (input == 't')
+    else if (this.input == 't')
     {
-        next(3);
-        if (input == '(')
+       next(3);
+        if (this.input == '(')
         {
             next(1);
             value = tan(plus());
-            if (input == ')')
+            if (this.input == ')')
             {
                 next(1);
             }
             else
             {
-                error = 2;
+                this.error = 2;
                 return 0.0;
             }
         }
-        if (input == 'h')
+        if (this.input == 'h')
         {
             next(1);
-            if (input == '(')
+            if (this.input == '(')
             {
                 next(1);
                 value = tanh(plus());
-                if (input == ')')
+                if (this.input == ')')
                 {
                     next(1);
                 }
                 else
                 {
-                    error = 2;
+                    this.error = 2;
                     return 0.0;
                 }
             }
         }
     }
-    else if (input == 'a')
+    else if (this.input == 'a')
     {
         next(1);
-        if (input == 's')
+        if (this.input == 's')
         {
             next(3);
-            if (input == '(')
+            if (this.input == '(')
             {
                 next(1);
                 value = asin(plus());
-                if (input == ')')
+                if (this.input == ')')
                 {
                     next(1);
                 }
                 else
                 {
-                    error = 2;
+                    this.error = 2;
                     return 0.0;
                 }
             }
         }
-        else if (input == 'c')
+        else if (this.input == 'c')
         {
             next(3);
-            if (input == '(')
+            if (this.input == '(')
             {
                 next(1);
                 value = acos(plus());
-                if (input == ')')
+                if (this.input == ')')
                 {
                     next(1);
                 }
                 else
                 {
-                    error = 2;
+                    this.error = 2;
                     return 0.0;
                 }
             }
         }
-        else if (input == 't')
+        else if (this.input == 't')
         {
             next(3);
-            if (input == '(')
+            if (this.input == '(')
             {
                 next(1);
                 value = atan(plus());
-                if (input == ')')
+                if (this.input == ')')
                 {
                     next(1);
                 }
                 else
                 {
-                    error = 2;
+                    this.error = 2;
                     return 0.0;
                 }
             }
         }
     }
-    if (input == '!')
+    if (this.input == '!')
     {
         for (int num = value; num >= 1; --num)
             value *= num;

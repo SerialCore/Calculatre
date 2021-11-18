@@ -6,6 +6,10 @@
 
 using namespace std;
 
+void gethelp();
+void rolling();
+void calculator(char* _formula);
+
 
 int main(int argc, char* argv[])
 {
@@ -24,6 +28,8 @@ int main(int argc, char* argv[])
             calculator(argv[1]);
         }
     }
+
+    return 0;
 }
 
 void rolling()

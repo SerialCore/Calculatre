@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "ostream": "c",
+        "string_view": "c",
+        "*.tcc": "c",
+        "string": "c"
+    }
+}
